@@ -25,6 +25,8 @@ class AdvPostRepository extends CoreRepository
             ->with('category:id,title')
             ->paginate($perPage);
 
+        $result->appends(['search' => $search]);
+
         return $result;
     }
     public function getByCategoryForIndexWithPaginate($perPage, $categoryId)
@@ -36,6 +38,8 @@ class AdvPostRepository extends CoreRepository
             ->where('category_id', '=', $categoryId)
             ->with('category:id,title')
             ->paginate($perPage);
+
+        $result->appends(['category' => $categoryId]);
 
         return $result;
     }

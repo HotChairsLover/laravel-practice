@@ -45,13 +45,6 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="slug">Идентификатор</label>
-                    <input name="slug" value="{{$item->slug}}"
-                           id="slug"
-                           type="text"
-                           class="form-control">
-                </div>
-                <div class="form-group">
                     <label for="price">Цена</label>
                     <input name="price"
                            id="price"
