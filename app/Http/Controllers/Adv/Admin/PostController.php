@@ -5,8 +5,6 @@ namespace App\Http\Controllers\Adv\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdvPostCreateRequest;
 use App\Http\Requests\AdvPostUpdateRequest;
-use App\Jobs\BlogPostAfterCreateJob;
-use App\Jobs\BlogPostAfterDeleteJob;
 use App\Models\AdvPost;
 use App\Repositories\AdvCategoryRepository;
 use App\Repositories\AdvPostRepository;

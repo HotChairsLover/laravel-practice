@@ -36,7 +36,6 @@
                     <select name="category_id"
                             id="category_id"
                             class="form-control"
-                            placeholder="Выберите категорию"
                             required>
                         @foreach($categoryList as $categoryOption)
                             <option value="{{ $categoryOption->id }}"
