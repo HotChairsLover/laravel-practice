@@ -20,8 +20,6 @@ class ProfileController extends BaseController
         parent::__construct();
 
         $this->advPostRepository = $advPostRepository;
-
-        $this->middleware('auth');
     }
 
     /**
