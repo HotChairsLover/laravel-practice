@@ -19,6 +19,8 @@ Auth::routes();
 Route::get('/', [App\Http\Controllers\Adv\PostController::class, 'index'])->name('home');
 
 Route::group(['namespace' => 'App\Http\Controllers\Adv'], function () {
+    Route::get('posts/{category}', 'PostController@categorySearch')->name('adv.posts.categorySearch');
+    Route::get('posts/{search?}', 'PostController@textSearch')->name('adv.posts.textSearch');
     Route::resource('posts', 'PostController')
         ->names('adv.posts');
     Route::resource('profile', 'ProfileController')

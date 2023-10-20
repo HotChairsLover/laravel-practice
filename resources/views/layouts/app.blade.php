@@ -43,7 +43,7 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <form role="search" method="GET" action="{{route('adv.posts.index')}}">
+                            <form role="search" method="GET" action="{{route('adv.posts.textSearch')}}">
                                 <input class="form-control" type="search" name="search" placeholder="Search" aria-label="Search">
                             </form>
                         </li>

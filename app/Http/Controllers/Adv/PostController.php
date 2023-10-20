@@ -34,15 +34,23 @@ class PostController extends BaseController
      */
     public function index(Request $request)
     {
-        if ($request->category) {
-            $categoryId = $request->category;
-            $paginator = $this->advPostRepository->getByCategoryForIndexWithPaginate(20, $categoryId);
-        } elseif ($request->search) {
-            $search = $request->search;
-            $paginator = $this->advPostRepository->getBySearchForIndexWithPaginate(20, $search);
-        } else {
-            $paginator = $this->advPostRepository->getForIndexWithPaginate(20);
-        }
+        $paginator = $this->advPostRepository->getForIndexWithPaginate(20);
+
+        return view('adv.posts.index', compact('paginator'));
+    }
+
+    public function categorySearch(Request $request)
+    {
+        $categoryId = $request->category;
+        $paginator = $this->advPostRepository->getByCategoryForIndexWithPaginate(20, $categoryId);
+
+        return view('adv.posts.index', compact('paginator'));
+    }
+
+    public function textSearch(Request $request)
+    {
+        $search = $request->search;
+        $paginator = $this->advPostRepository->getBySearchForIndexWithPaginate(20, $search);
 
         return view('adv.posts.index', compact('paginator'));
     }

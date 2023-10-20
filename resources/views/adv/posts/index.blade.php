@@ -16,7 +16,7 @@
                             </svg>
                             <div class="card-body">
                                 <p class="card-text">
-                                    <a href="{{route('adv.posts.index', ['category' => $post->category->id])}}">{{$post->category->title}}</a>
+                                    <a href="{{route('adv.posts.categorySearch', ['category' => $post->category->id])}}">{{$post->category->title}}</a>
                                 </p>
                                 <p class="card-text">{{$post->title}}</p>
                                 <p class="card-text">{{$post->price}} ₽</p>
