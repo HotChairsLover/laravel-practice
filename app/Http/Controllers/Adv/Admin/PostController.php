@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Adv\Admin;
 
+use App\Http\Factories\Adv\AdvPostFactory;
 use App\Http\Requests\AdvPostCreateRequest;
 use App\Http\Requests\AdvPostUpdateRequest;
 use App\Models\AdvPost;
@@ -56,7 +57,8 @@ class PostController extends BaseController
     public function store(AdvPostCreateRequest $request)
     {
         $data = $request->input();
-        $item = (new AdvPost())->create($data);
+        $postFactory = new AdvPostFactory();
+        $item = $postFactory->create($data);
 
         if ($item) {
             return redirect()
@@ -101,7 +103,8 @@ class PostController extends BaseController
 
         $data = $request->all();
 
-        $result = $item->update($data);
+        $postFactory = new AdvPostFactory();
+        $result = $postFactory->update($item, $data);
 
         if ($result) {
             return redirect()

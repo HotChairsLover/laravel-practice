@@ -25,8 +25,5 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Paginator::defaultView('vendor.pagination.bootstrap-5');
-
-        AdvPost::observe(AdvPostObserver::class);
-        AdvCategory::observe(AdvCategoryObserver::class);
     }
 }

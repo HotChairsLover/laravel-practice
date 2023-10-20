@@ -26,7 +26,7 @@
                     </form>
                     @if($item->exists)
                         <br>
-                        <form method="POST" action="{{ route('blog.admin.posts.destroy', $item->id) }}">
+                        <form method="POST" action="{{ route('adv.admin.posts.destroy', $item->id) }}">
                             @method('DELETE')
                             @csrf
                             <div class="row justify-content-center">

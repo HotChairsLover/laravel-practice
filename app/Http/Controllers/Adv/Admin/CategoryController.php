@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Adv\Admin;
 
+use App\Http\Factories\Adv\AdvCategoryFactory;
 use App\Http\Requests\AdvCategoryCreateRequest;
 use App\Http\Requests\AdvCategoryUpdateRequest;
 use App\Models\AdvCategory;
@@ -49,8 +50,8 @@ class CategoryController extends BaseController
     public function store(AdvCategoryCreateRequest $request)
     {
         $data = $request->input();
-
-        $item = (new AdvCategory())->create($data);
+        $categoryFactory = new AdvCategoryFactory();
+        $item = $categoryFactory->create($data);
 
         if ($item) {
             return redirect()->route('adv.admin.categories.edit', [$item->id])
@@ -88,9 +89,9 @@ class CategoryController extends BaseController
                 ->withInput();
         }
 
-        $data = $request->all();
-
-        $result = $item->update($data);
+        $data = $request->input();
+        $categoryFactory = new AdvCategoryFactory();
+        $result = $categoryFactory->update($item, $data);
 
         if ($result) {
             return redirect()
