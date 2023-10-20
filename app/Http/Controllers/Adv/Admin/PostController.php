@@ -2,15 +2,11 @@
 
 namespace App\Http\Controllers\Adv\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\AdvPostCreateRequest;
 use App\Http\Requests\AdvPostUpdateRequest;
 use App\Models\AdvPost;
 use App\Repositories\AdvCategoryRepository;
 use App\Repositories\AdvPostRepository;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 class PostController extends BaseController
 {
@@ -24,12 +20,12 @@ class PostController extends BaseController
      */
     private $advCategoryRepository;
 
-    public function __construct()
+    public function __construct(AdvPostRepository $advPostRepository, AdvCategoryRepository $advCategoryRepository)
     {
         parent::__construct();
 
-        $this->advPostRepository = app(AdvPostRepository::class);
-        $this->advCategoryRepository = app(AdvCategoryRepository::class);
+        $this->advPostRepository = $advPostRepository;
+        $this->advCategoryRepository = $advCategoryRepository;
     }
 
     /**
@@ -62,26 +58,15 @@ class PostController extends BaseController
         $data = $request->input();
         $item = (new AdvPost())->create($data);
 
-        if($item)
-        {
+        if ($item) {
             return redirect()
                 ->route('adv.admin.posts.edit', [$item->id])
                 ->with(['success' => "Успешно сохранено"]);
-        }
-        else
-        {
+        } else {
             return back()
                 ->withErrors(['msg' => 'Ошибка сохранения'])
                 ->withInput();
         }
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        dd(__METHOD__, $id);
     }
 
     /**
@@ -90,8 +75,7 @@ class PostController extends BaseController
     public function edit(string $id)
     {
         $item = $this->advPostRepository->getEdit($id);
-        if(empty($item))
-        {
+        if (empty($item)) {
             abort(404);
         }
 
@@ -109,8 +93,7 @@ class PostController extends BaseController
     {
         $item = $this->advPostRepository->getEdit($id);
 
-        if(empty($item))
-        {
+        if (empty($item)) {
             return back()
                 ->withErrors(['msg' => 'Запись id=[{$id}] не найдена'])
                 ->withInput();
@@ -120,14 +103,11 @@ class PostController extends BaseController
 
         $result = $item->update($data);
 
-        if($result)
-        {
+        if ($result) {
             return redirect()
                 ->route('adv.admin.posts.edit', $item->id)
                 ->with(['success' => 'Успешно сохранено']);
-        }
-        else
-        {
+        } else {
             return back()
                 ->withErrors(['msg' => 'Ошибка сохранения'])
                 ->withInput();
@@ -143,14 +123,11 @@ class PostController extends BaseController
     {
         $result = AdvPost::destroy($id);
 
-        if($result)
-        {
+        if ($result) {
             return redirect()
                 ->route('adv.admin.posts.index')
                 ->with(["success" => "Запись id[$id] удалена"]);
-        }
-        else
-        {
+        } else {
             return back()->withErrors(['msg' => 'Ошибка удаления']);
         }
     }

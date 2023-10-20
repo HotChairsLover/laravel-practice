@@ -9,8 +9,7 @@ class AdvCategoryObserver
 {
     protected function setSlug(AdvCategory $advCategory)
     {
-        if(empty($advCategory->slug))
-        {
+        if (empty($advCategory->slug)) {
             $advCategory->slug = Str::slug($advCategory->title);
         }
     }

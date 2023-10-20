@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers\Adv\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\AdvCategoryCreateRequest;
 use App\Http\Requests\AdvCategoryUpdateRequest;
 use App\Models\AdvCategory;
 use App\Repositories\AdvCategoryRepository;
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 class CategoryController extends BaseController
 {
@@ -17,10 +14,10 @@ class CategoryController extends BaseController
      */
     private $advCategoryRepository;
 
-    public function __construct()
+    public function __construct(AdvCategoryRepository $advCategoryRepository)
     {
         parent::__construct();
-        $this->advCategoryRepository = app(AdvCategoryRepository::class);
+        $this->advCategoryRepository = $advCategoryRepository;
     }
 
     /**
@@ -55,23 +52,13 @@ class CategoryController extends BaseController
 
         $item = (new AdvCategory())->create($data);
 
-        if($item)
-        {
+        if ($item) {
             return redirect()->route('adv.admin.categories.edit', [$item->id])
                 ->with(['success' => 'Успешно сохранено']);
-        }
-        else{
+        } else {
             return back()->withErrors(['msg' => 'Ошибка сохранения'])
                 ->withInput();
         }
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        dd(__METHOD__);
     }
 
     /**
@@ -80,8 +67,7 @@ class CategoryController extends BaseController
     public function edit(string $id)
     {
         $item = $this->advCategoryRepository->getEdit($id);
-        if(empty($item))
-        {
+        if (empty($item)) {
             abort(404);
         }
         $categoryList = $this->advCategoryRepository->getForComboBox();
@@ -96,8 +82,7 @@ class CategoryController extends BaseController
     public function update(AdvCategoryUpdateRequest $request, string $id)
     {
         $item = $this->advCategoryRepository->getEdit($id);
-        if(empty($item))
-        {
+        if (empty($item)) {
             return back()
                 ->withErrors(['msg' => "Запись id=[{$id}] не найдена"])
                 ->withInput();
@@ -107,25 +92,15 @@ class CategoryController extends BaseController
 
         $result = $item->update($data);
 
-        if($result)
-        {
+        if ($result) {
             return redirect()
                 ->route('adv.admin.categories.edit', $item->id)
                 ->with(['success' => 'Успешно сохранено']);
-        }
-        else
-        {
+        } else {
             return back()
                 ->withErrors(['msg' => 'Ошибка сохранения'])
                 ->withInput();
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        dd(__METHOD__);
-    }
 }

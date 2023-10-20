@@ -13,12 +13,9 @@ class AdvCategoryUpdateRequest extends FormRequest
     public function authorize(): bool
     {
         $user = Auth::user();
-        if($user)
-        {
+        if ($user) {
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }

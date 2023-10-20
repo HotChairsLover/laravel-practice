@@ -10,8 +10,7 @@ class AdvPostObserver
 {
     protected function setPublishedAt(AdvPost $advPost)
     {
-        if(empty($advPost->published_at) && $advPost->is_published)
-        {
+        if (empty($advPost->published_at) && $advPost->is_published) {
             $advPost->published_at = Carbon::now();
         }
 
@@ -19,8 +18,7 @@ class AdvPostObserver
 
     protected function setSlug(AdvPost $advPost)
     {
-        if(empty($advPost->slug))
-        {
+        if (empty($advPost->slug)) {
             $advPost->slug = Str::slug($advPost->title);
         }
     }
@@ -51,6 +49,7 @@ class AdvPostObserver
         $this->setPublishedAt($advPost);
         $this->setSlug($advPost);
     }
+
     /**
      * Handle the AdvPost "updated" event.
      */

@@ -13,12 +13,9 @@ class AdvPostCreateRequest extends FormRequest
     public function authorize(): bool
     {
         $user = Auth::user();
-        if($user)
-        {
+        if ($user) {
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -42,15 +39,15 @@ class AdvPostCreateRequest extends FormRequest
     public function messages()
     {
         return [
-          'title.required' => 'Введите заголовок статьи',
-          'description.min' => 'Минимальная длина описания [:min] символов',
+            'title.required' => 'Введите заголовок статьи',
+            'description.min' => 'Минимальная длина описания [:min] символов',
         ];
     }
 
     public function attributes()
     {
         return [
-          'title' => 'Заголовок',
+            'title' => 'Заголовок',
         ];
     }
 

@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Adv;
 
-use App\Http\Controllers\Controller;
-use App\Repositories\AdvCategoryRepository;
 use App\Repositories\AdvPostRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,11 +15,11 @@ class ProfileController extends BaseController
      */
     private $advPostRepository;
 
-    public function __construct()
+    public function __construct(AdvPostRepository $advPostRepository)
     {
         parent::__construct();
 
-        $this->advPostRepository = app(AdvPostRepository::class);
+        $this->advPostRepository = $advPostRepository;
 
         $this->middleware('auth');
     }

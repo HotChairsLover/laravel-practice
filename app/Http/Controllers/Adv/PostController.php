@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Adv;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\AdvPostCreateRequest;
 use App\Http\Requests\AdvPostUpdateRequest;
+use App\Models\AdvPost;
 use App\Repositories\AdvCategoryRepository;
 use App\Repositories\AdvPostRepository;
 use Illuminate\Http\Request;
-use App\Models\AdvPost;
 
 class PostController extends BaseController
 {
@@ -22,30 +21,26 @@ class PostController extends BaseController
      */
     private $advCategoryRepository;
 
-    public function __construct()
+    public function __construct(AdvPostRepository $advPostRepository, AdvCategoryRepository $advCategoryRepository)
     {
         parent::__construct();
 
-        $this->advPostRepository = app(AdvPostRepository::class);
-        $this->advCategoryRepository = app(AdvCategoryRepository::class);
+        $this->advPostRepository = $advPostRepository;
+        $this->advCategoryRepository = $advCategoryRepository;
     }
+
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
-        if($request->category)
-        {
+        if ($request->category) {
             $categoryId = $request->category;
             $paginator = $this->advPostRepository->getByCategoryForIndexWithPaginate(20, $categoryId);
-        }
-        elseif ($request->search)
-        {
+        } elseif ($request->search) {
             $search = $request->search;
             $paginator = $this->advPostRepository->getBySearchForIndexWithPaginate(20, $search);
-        }
-        else
-        {
+        } else {
             $paginator = $this->advPostRepository->getForIndexWithPaginate(20);
         }
 
@@ -72,14 +67,11 @@ class PostController extends BaseController
     {
         $data = $request->input();
         $item = (new AdvPost())->create($data);
-        if($item)
-        {
+        if ($item) {
             return redirect()
                 ->route('adv.posts.edit', [$item->id])
                 ->with(['success' => "Успешно сохранено"]);
-        }
-        else
-        {
+        } else {
             return back()
                 ->withErrors(['msg' => 'Ошибка сохранения'])
                 ->withInput();
@@ -92,7 +84,6 @@ class PostController extends BaseController
     public function show(string $id)
     {
         $item = $this->advPostRepository->getShow($id);
-        //dd(__METHOD__,$item);
 
         return view('adv.posts.show', compact('item'));
 
@@ -104,8 +95,7 @@ class PostController extends BaseController
     public function edit(string $id)
     {
         $item = $this->advPostRepository->getEdit($id);
-        if(empty($item))
-        {
+        if (empty($item)) {
             abort(404);
         }
 
@@ -123,8 +113,7 @@ class PostController extends BaseController
     {
         $item = $this->advPostRepository->getEdit($id);
 
-        if(empty($item))
-        {
+        if (empty($item)) {
             return back()
                 ->withErrors(['msg' => 'Запись id=[{$id}] не найдена'])
                 ->withInput();
@@ -134,14 +123,11 @@ class PostController extends BaseController
 
         $result = $item->update($data);
 
-        if($result)
-        {
+        if ($result) {
             return redirect()
                 ->route('adv.posts.edit', $item->id)
                 ->with(['success' => 'Успешно сохранено']);
-        }
-        else
-        {
+        } else {
             return back()
                 ->withErrors(['msg' => 'Ошибка сохранения'])
                 ->withInput();
@@ -155,14 +141,11 @@ class PostController extends BaseController
     {
         $result = AdvPost::destroy($id);
 
-        if($result)
-        {
+        if ($result) {
             return redirect()
                 ->route('adv.posts.index')
                 ->with(["success" => "Запись id[$id] удалена"]);
-        }
-        else
-        {
+        } else {
             return back()->withErrors(['msg' => 'Ошибка удаления']);
         }
     }

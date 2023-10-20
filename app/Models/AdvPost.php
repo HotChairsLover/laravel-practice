@@ -12,15 +12,16 @@ class AdvPost extends Model
 
     const UNKNOWN_USER = 1;
     protected $fillable
-    = [
-        'title',
-        'slug',
-        'category_id',
-        'price',
-        'description',
-        'is_published',
-        'published_at',
-    ];
+        = [
+            'title',
+            'slug',
+            'category_id',
+            'price',
+            'description',
+            'is_published',
+            'published_at',
+        ];
+
     public function category()
     {
         return $this->belongsTo(AdvCategory::class);
