@@ -2,23 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
-
-class AdvCategoryCreateRequest extends FormRequest
+class AdvCategoryCreateRequest extends AdvBaseRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
-    {
-        $user = Auth::user();
-        if ($user) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
     /**
      * Get the validation rules that apply to the request.
