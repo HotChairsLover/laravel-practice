@@ -31,10 +31,19 @@ Route::group($advGroupData, function () {
         Route::get('posts/search/{search?}', 'PostController@textSearch')->name('adv.posts.textSearch');
         Route::get('posts/{post}', 'PostController@show')->name('adv.posts.show');
     });
+});
 
-    Route::resource('profile', 'ProfileController')
-        ->except(['create', 'store'])
-        ->names('adv.profile');
+$profileGroupData = [
+    'namespace' => 'App\Http\Controllers\Profile',
+    'middleware' => ['auth'],
+    'prefix' => 'profile',
+];
+Route::group($profileGroupData, function () {
+    Route::get('posts', 'ProfileController@posts')->name('profile.posts');
+    Route::get('edit', 'ProfileController@edit')->name('profile.edit');
+    Route::patch('update', 'ProfileController@update')->name('profile.update');
+    Route::get('/', 'ProfileController@index')->name('profile.index');
+    Route::delete('destroy', 'ProfileController@forcedDelete')->name('profile.forcedDelete');
 });
 
 $adminGroupData = [

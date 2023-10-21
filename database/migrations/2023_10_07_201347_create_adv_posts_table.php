@@ -30,8 +30,10 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('category_id')->references('id')->on('adv_categories');
+            $table->foreign('user_id')->references('id')->on('users')
+                ->onDelete('CASCADE')->onUpdate('CASCADE');
+            $table->foreign('category_id')->references('id')->on('adv_categories')
+                ->onDelete('CASCADE')->onUpdate('CASCADE');
             $table->index('is_published');
         });
     }
