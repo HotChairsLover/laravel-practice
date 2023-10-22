@@ -83,6 +83,8 @@ class AdvPostRepository extends CoreRepository
             'price',
             'category_id',
             'user_id',
+            'published_at',
+            'updated_at',
         ];
 
         $result = $this->startConditions()
