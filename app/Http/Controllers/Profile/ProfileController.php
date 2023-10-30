@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Profile;
 
+use App\Http\Requests\ProfileRequest;
 use App\Repositories\AdvPostRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -52,7 +53,7 @@ class ProfileController extends BaseController
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
+    public function update(ProfileRequest $request)
     {
         $user = Auth::user();
         $userUpdateData = $request->input();

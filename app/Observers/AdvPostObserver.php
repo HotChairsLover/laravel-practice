@@ -4,7 +4,7 @@ namespace App\Observers;
 
 use App\Models\AdvPost;
 
-class AdvPostObserver
+class AdvPostObserver extends BaseObserver
 {
 
     public function creating(AdvPost $advPost)

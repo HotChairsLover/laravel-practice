@@ -15,8 +15,6 @@ class AdvPostFactory
 
         $this->setData($advPost);
 
-        $advPost->save();
-
         return $advPost;
 
     }
@@ -27,8 +25,6 @@ class AdvPostFactory
         $advPost->fill($data);
 
         $this->setData($advPost);
-
-        $advPost->save();
 
         return $advPost;
     }

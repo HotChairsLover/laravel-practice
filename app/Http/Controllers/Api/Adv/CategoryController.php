@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Adv\Admin;
+namespace App\Http\Controllers\Api\Adv;
 
+use App\Http\Controllers\Controller;
 use App\Http\Factories\Adv\AdvCategoryFactory;
 use App\Http\Requests\Adv\CategoryCreateRequest;
 use App\Http\Requests\Adv\CategoryUpdateRequest;
-use App\Models\AdvCategory;
 use App\Repositories\AdvCategoryRepository;
+use Illuminate\Http\Request;
 
-class CategoryController extends BaseController
+class CategoryController extends ApiAdvBaseController
 {
     /**
      * @var AdvCategoryRepository
@@ -20,7 +21,6 @@ class CategoryController extends BaseController
         parent::__construct();
         $this->advCategoryRepository = $advCategoryRepository;
     }
-
     /**
      * Display a listing of the resource.
      */
@@ -28,20 +28,7 @@ class CategoryController extends BaseController
     {
         $paginator = $this->advCategoryRepository->getAllWithPaginate(15);
 
-        return view('adv.admin.categories.index', compact('paginator'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        $item = new AdvCategory();
-        $categoryList
-            = $this->advCategoryRepository->getForComboBox();
-
-        return view('adv.admin.categories.edit',
-            compact('item', 'categoryList'));
+        return $paginator;
     }
 
     /**
@@ -55,27 +42,10 @@ class CategoryController extends BaseController
         $item->save();
 
         if ($item) {
-            return redirect()->route('adv.admin.categories.edit', [$item->id])
-                ->with(['success' => 'Успешно сохранено']);
+            return ['success' => 'Успешно сохранено'];
         } else {
-            return back()->withErrors(['msg' => 'Ошибка сохранения'])
-                ->withInput();
+            return ['msg' => 'Ошибка сохранения'];
         }
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        $item = $this->advCategoryRepository->getEdit($id);
-        if (empty($item)) {
-            abort(404);
-        }
-        $categoryList = $this->advCategoryRepository->getForComboBox();
-
-        return view('adv.admin.categories.edit',
-            compact('item', 'categoryList'));
     }
 
     /**
@@ -96,14 +66,9 @@ class CategoryController extends BaseController
         $item->save();
 
         if ($item) {
-            return redirect()
-                ->route('adv.admin.categories.edit', $item->id)
-                ->with(['success' => 'Успешно сохранено']);
+            return ['success' => 'Успешно сохранено'];
         } else {
-            return back()
-                ->withErrors(['msg' => 'Ошибка сохранения'])
-                ->withInput();
+            return ['msg' => 'Ошибка сохранения'];
         }
     }
-
 }

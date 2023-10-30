@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Adv\Admin;
 
 use App\Http\Factories\Adv\AdvPostFactory;
-use App\Http\Requests\AdvPostCreateRequest;
-use App\Http\Requests\AdvPostUpdateRequest;
+use App\Http\Requests\Adv\PostCreateRequest;
+use App\Http\Requests\Adv\PostUpdateRequest;
 use App\Models\AdvPost;
 use App\Repositories\AdvCategoryRepository;
 use App\Repositories\AdvPostRepository;
@@ -54,7 +54,7 @@ class PostController extends BaseController
     /**
      * Store a newly created resource in storage.
      */
-    public function store(AdvPostCreateRequest $request)
+    public function store(PostCreateRequest $request)
     {
         $data = $request->input();
         $postFactory = new AdvPostFactory();
@@ -91,7 +91,7 @@ class PostController extends BaseController
     /**
      * Update the specified resource in storage.
      */
-    public function update(AdvPostUpdateRequest $request, string $id)
+    public function update(PostUpdateRequest $request, string $id)
     {
         $item = $this->advPostRepository->getEdit($id);
 

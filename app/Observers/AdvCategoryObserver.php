@@ -5,7 +5,7 @@ namespace App\Observers;
 use App\Models\AdvCategory;
 use Illuminate\Support\Str;
 
-class AdvCategoryObserver
+class AdvCategoryObserver extends BaseObserver
 {
 
     public function creating(AdvCategory $advCategory)

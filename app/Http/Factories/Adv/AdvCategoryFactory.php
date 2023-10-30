@@ -13,8 +13,6 @@ class AdvCategoryFactory
 
         $this->setSlug($advCategory);
 
-        $advCategory->save();
-
         return $advCategory;
     }
 
@@ -24,8 +22,6 @@ class AdvCategoryFactory
         $advCategory->fill($data);
 
         $this->setSlug($advCategory);
-
-        $advCategory->save();
 
         return $advCategory;
     }

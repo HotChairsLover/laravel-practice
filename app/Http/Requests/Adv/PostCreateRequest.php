@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Adv;
 
-class AdvPostCreateRequest extends AdvBaseRequest
+class PostCreateRequest extends AdvBaseRequest
 {
 
     /**
