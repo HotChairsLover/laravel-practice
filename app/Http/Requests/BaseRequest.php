@@ -9,6 +9,6 @@ abstract class BaseRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return !is_null(Auth::user());
+        return true; //!is_null(Auth::user());
     }
 }

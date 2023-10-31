@@ -20,7 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 $apiAdvGroupData = [
     'namespace' => 'App\Http\Controllers\Api\Adv',
-    'middleware' => ['api'],
+    //'middleware' => ['auth'],
 ];
 Route::group($apiAdvGroupData, function () {
     Route::apiResource('posts', 'PostController')
