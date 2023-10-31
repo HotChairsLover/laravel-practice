@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers\Api\Adv;
 
-use App\Http\Controllers\Controller;
-use App\Http\Factories\Adv\AdvPostFactory;
 use App\Http\Requests\Adv\PostCreateRequest;
 use App\Http\Requests\Adv\PostUpdateRequest;
+use App\Http\Resources\SuccessJsonResource;
 use App\Models\AdvPost;
-use App\Repositories\AdvCategoryRepository;
 use App\Repositories\AdvPostRepository;
 use Illuminate\Http\Request;
 
@@ -24,6 +22,7 @@ class PostController extends ApiAdvBaseController
 
         $this->advPostRepository = $advPostRepository;
     }
+
     /**
      * Display a listing of the resource.
      */
@@ -31,7 +30,7 @@ class PostController extends ApiAdvBaseController
     {
         $paginator = $this->advPostRepository->getForIndexWithPaginate(20);
 
-        return $paginator;
+        return SuccessJsonResource::make($paginator);
     }
 
     public function categorySearch(Request $request)
@@ -39,7 +38,7 @@ class PostController extends ApiAdvBaseController
         $categoryId = $request->category;
         $paginator = $this->advPostRepository->getByCategoryForIndexWithPaginate(20, $categoryId);
 
-        return $paginator;
+        return SuccessJsonResource::make($paginator);
     }
 
     public function textSearch(Request $request)
@@ -47,24 +46,17 @@ class PostController extends ApiAdvBaseController
         $search = $request->search;
         $paginator = $this->advPostRepository->getBySearchForIndexWithPaginate(20, $search);
 
-        return $paginator;
+        return SuccessJsonResource::make($paginator);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(PostCreateRequest $request)
     {
-        $data = $request->input();
-        $postFactory = new AdvPostFactory();
-        $item = $postFactory->create($data);
-        $item->save();
+        $result = app(CreatePostAction::class)($request->input());
 
-        if ($item) {
-            return ['id' => $item->id, 'success' => "Успешно сохранено"];
-        } else {
-            return ['msg' => 'Ошибка сохранения'];
-        }
+        return SuccessJsonResource::make($result);
     }
 
     /**
@@ -74,7 +66,7 @@ class PostController extends ApiAdvBaseController
     {
         $item = $this->advPostRepository->getShow($id);
 
-        return $item;
+        return SuccessJsonResource::make($item);
     }
 
     /**
@@ -82,23 +74,9 @@ class PostController extends ApiAdvBaseController
      */
     public function update(PostUpdateRequest $request, string $id)
     {
-        $item = $this->advPostRepository->getEdit($id);
+        $result = app(UpdatePostAction::class)($request->input(), $id);
 
-        if (empty($item)) {
-            return ['msg' => "Запись id=[{$id}] не найдена"];
-        }
-
-        $data = $request->input();
-
-        $postFactory = new AdvPostFactory();
-        $item = $postFactory->update($item, $data);
-        $item->save();
-
-        if ($item) {
-            return ['id' => $item->id, 'success' => "Успешно сохранено"];
-        } else {
-            return ['msg' => 'Ошибка сохранения'];
-        }
+        return SuccessJsonResource::make($result);
     }
 
     /**
@@ -107,10 +85,7 @@ class PostController extends ApiAdvBaseController
     public function destroy(string $id)
     {
         $result = AdvPost::destroy($id);
-        if ($result) {
-            return ["success" => "Запись id[$id] удалена"];
-        } else {
-            return ['msg' => 'Ошибка удаления'];
-        }
+
+        return SuccessJsonResource::make($result);
     }
 }

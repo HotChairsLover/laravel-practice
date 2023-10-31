@@ -9,41 +9,41 @@ use Illuminate\Support\Str;
 class AdvPostFactory
 {
 
-    public function create($data)
+    public static function create($data)
     {
         $advPost = new AdvPost($data);
 
-        $this->setData($advPost);
+        AdvPostFactory::setData($advPost);
 
         return $advPost;
 
     }
 
-    public function update($post, $data)
+    public static function update($post, $data)
     {
         $advPost = $post;
         $advPost->fill($data);
 
-        $this->setData($advPost);
+        AdvPostFactory::setData($advPost);
 
         return $advPost;
     }
 
-    private function setData(AdvPost $advPost)
+    private static function setData(AdvPost $advPost)
     {
-        $this->setPublishedAt($advPost);
-        $this->setUser($advPost);
-        $this->setSlug($advPost);
+        AdvPostFactory::setPublishedAt($advPost);
+        AdvPostFactory::setUser($advPost);
+        AdvPostFactory::setSlug($advPost);
     }
 
-    private function setSlug(AdvPost $advPost)
+    private static function setSlug(AdvPost $advPost)
     {
         if (empty($advPost->slug)) {
             $advPost->slug = Str::slug($advPost->title);
         }
     }
 
-    private function setPublishedAt(AdvPost $advPost)
+    private static function setPublishedAt(AdvPost $advPost)
     {
         if (empty($advPost->published_at) && $advPost->is_published) {
             $advPost->published_at = Carbon::now();
@@ -51,7 +51,7 @@ class AdvPostFactory
 
     }
 
-    private function setUser(AdvPost $advPost)
+    private static function setUser(AdvPost $advPost)
     {
         $advPost->user_id = auth()->id() ?? AdvPost::UNKNOWN_USER;
     }
