@@ -2,6 +2,7 @@
 
 namespace App\Http\Factories\Adv;
 
+use App\Exceptions\Adv\FailedUpdateCategoryException;
 use App\Models\AdvPost;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
@@ -21,9 +22,7 @@ class AdvPostFactory
 
     public static function update($post, $data, $userId)
     {
-        if ($post->user_id != $userId) {
-            abort(403, 'Forbidden');
-        }
+        throw_if($post->user_id != $userId, FailedUpdateCategoryException::class);
         $advPost = $post;
         $advPost->fill($data);
 
