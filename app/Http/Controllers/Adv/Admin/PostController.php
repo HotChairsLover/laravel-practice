@@ -8,6 +8,7 @@ use App\Http\Requests\Adv\PostUpdateRequest;
 use App\Models\AdvPost;
 use App\Repositories\AdvCategoryRepository;
 use App\Repositories\AdvPostRepository;
+use Auth;
 
 class PostController extends BaseController
 {
@@ -102,9 +103,9 @@ class PostController extends BaseController
         }
 
         $data = $request->all();
-
+        $user = Auth::user();
         $postFactory = new AdvPostFactory();
-        $result = $postFactory->update($item, $data);
+        $result = $postFactory->update($item, $data, $user->id);
 
         if ($result) {
             return redirect()

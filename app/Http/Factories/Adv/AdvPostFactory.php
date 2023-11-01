@@ -9,30 +9,33 @@ use Illuminate\Support\Str;
 class AdvPostFactory
 {
 
-    public static function create($data)
+    public static function create($data, int $userId = null)
     {
         $advPost = new AdvPost($data);
 
-        AdvPostFactory::setData($advPost);
+        AdvPostFactory::setData($advPost, $userId);
 
         return $advPost;
 
     }
 
-    public static function update($post, $data)
+    public static function update($post, $data, $userId)
     {
+        if ($post->user_id != $userId) {
+            abort(403, 'Forbidden');
+        }
         $advPost = $post;
         $advPost->fill($data);
 
-        AdvPostFactory::setData($advPost);
+        AdvPostFactory::setData($advPost, $userId);
 
         return $advPost;
     }
 
-    private static function setData(AdvPost $advPost)
+    private static function setData(AdvPost $advPost, $userId)
     {
         AdvPostFactory::setPublishedAt($advPost);
-        AdvPostFactory::setUser($advPost);
+        AdvPostFactory::setUser($advPost, $userId);
         AdvPostFactory::setSlug($advPost);
     }
 
@@ -51,8 +54,8 @@ class AdvPostFactory
 
     }
 
-    private static function setUser(AdvPost $advPost)
+    private static function setUser(AdvPost $advPost, $userId)
     {
-        $advPost->user_id = auth()->id() ?? AdvPost::UNKNOWN_USER;
+        $advPost->user_id = auth()->id() ?? $userId ?? AdvPost::UNKNOWN_USER;
     }
 }

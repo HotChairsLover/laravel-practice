@@ -7,6 +7,7 @@ use App\Http\Requests\Adv\PostUpdateRequest;
 use App\Http\Resources\SuccessJsonResource;
 use App\Models\AdvPost;
 use App\Repositories\AdvPostRepository;
+use App\Repositories\ProfileRepository;
 use Illuminate\Http\Request;
 
 class PostController extends ApiAdvBaseController
@@ -15,12 +16,17 @@ class PostController extends ApiAdvBaseController
      * @var AdvPostRepository
      */
     private $advPostRepository;
+    /**
+     * @var ProfileRepository
+     */
+    private $profileRepository;
 
-    public function __construct(AdvPostRepository $advPostRepository)
+    public function __construct(AdvPostRepository $advPostRepository, ProfileRepository $profileRepository)
     {
         parent::__construct();
 
         $this->advPostRepository = $advPostRepository;
+        $this->profileRepository = $profileRepository;
     }
 
     /**
@@ -54,7 +60,8 @@ class PostController extends ApiAdvBaseController
      */
     public function store(PostCreateRequest $request)
     {
-        $result = app(CreatePostAction::class)($request->input());
+        $user = $this->profileRepository->getByApiKey($request->header('apikey'));
+        $result = app(CreatePostAction::class)($request->input(), $user->id);
 
         return SuccessJsonResource::make($result);
     }
@@ -74,7 +81,8 @@ class PostController extends ApiAdvBaseController
      */
     public function update(PostUpdateRequest $request, string $id)
     {
-        $result = app(UpdatePostAction::class)($request->input(), $id, $this->advPostRepository);
+        $user = $this->profileRepository->getByApiKey($request->header('apikey'));
+        $result = app(UpdatePostAction::class)($request->input(), $id, $this->advPostRepository, $user->id);
 
         return SuccessJsonResource::make($result);
     }

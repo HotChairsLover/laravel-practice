@@ -8,6 +8,7 @@ use App\Http\Requests\Adv\PostUpdateRequest;
 use App\Models\AdvPost;
 use App\Repositories\AdvCategoryRepository;
 use App\Repositories\AdvPostRepository;
+use Auth;
 use Illuminate\Http\Request;
 
 class PostController extends BaseController
@@ -133,7 +134,8 @@ class PostController extends BaseController
         $data = $request->input();
 
         $postFactory = new AdvPostFactory();
-        $item = $postFactory->update($item, $data);
+        $user = Auth::user();
+        $item = $postFactory->update($item, $data, $user->id);
         $item->save();
 
         if ($item) {

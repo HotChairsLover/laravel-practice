@@ -8,9 +8,9 @@ use App\Models\AdvPost;
 
 class CreatePostAction
 {
-    public function __invoke(array $payload) : AdvPost
+    public function __invoke(array $payload, $userId) : AdvPost
     {
-        $post = AdvPostFactory::create($payload);
+        $post = AdvPostFactory::create($payload, $userId);
 
         throw_if(!$post->save(), FailedStorePostException::class);
 
