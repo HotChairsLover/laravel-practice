@@ -10,9 +10,8 @@ use App\Repositories\AdvCategoryRepository;
 
 class UpdateCategoryAction
 {
-    public function __invoke(array $payload, string $id): AdvCategory
+    public function __invoke(array $payload, string $id, AdvCategoryRepository $advCategoryRepository): AdvCategory
     {
-        $advCategoryRepository = new AdvCategoryRepository();
         $category = $advCategoryRepository->getEdit($id);
 
         throw_if(empty($category), UnknownCategoryException::class);

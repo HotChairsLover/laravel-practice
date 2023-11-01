@@ -74,7 +74,7 @@ class PostController extends ApiAdvBaseController
      */
     public function update(PostUpdateRequest $request, string $id)
     {
-        $result = app(UpdatePostAction::class)($request->input(), $id);
+        $result = app(UpdatePostAction::class)($request->input(), $id, $this->advPostRepository);
 
         return SuccessJsonResource::make($result);
     }

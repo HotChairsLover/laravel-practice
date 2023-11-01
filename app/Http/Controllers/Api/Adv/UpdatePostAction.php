@@ -10,9 +10,8 @@ use App\Repositories\AdvPostRepository;
 
 class UpdatePostAction
 {
-    public function __invoke(array $payload, string $id): AdvPost
+    public function __invoke(array $payload, string $id, AdvPostRepository $advPostRepository): AdvPost
     {
-        $advPostRepository = new AdvPostRepository();
         $post = $advPostRepository->getEdit($id);
 
         throw_if(empty($post), UnknownPostException::class);

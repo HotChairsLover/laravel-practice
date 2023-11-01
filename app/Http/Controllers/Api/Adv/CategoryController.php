@@ -44,7 +44,7 @@ class CategoryController extends ApiAdvBaseController
      */
     public function update(CategoryUpdateRequest $request, string $id)
     {
-        $result = app(UpdateCategoryAction::class)($request->input(), $id);
+        $result = app(UpdateCategoryAction::class)($request->input(), $id, $this->advCategoryRepository);
         return SuccessJsonResource::make($result);
     }
 }
