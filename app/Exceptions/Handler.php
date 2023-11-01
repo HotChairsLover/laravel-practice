@@ -53,9 +53,9 @@ class Handler extends ExceptionHandler
         } elseif ($e instanceof UnknownCategoryException) {
             return response()->json(FailedJsonResource::make($e->context()), 404);
         } elseif ($e instanceof FailedUpdateProfileException) {
-            return response()->json(FailedJsonResource::make($e->context()), 404);
+            return response()->json(FailedJsonResource::make($e->context()), 422);
         } elseif ($e instanceof FailedForceDeleteProfileException) {
-            return response()->json(FailedJsonResource::make($e->context()), 404);
+            return response()->json(FailedJsonResource::make($e->context()), 422);
         }
         return parent::render($request, $e);
     }
