@@ -56,6 +56,8 @@ class Handler extends ExceptionHandler
             return response()->json(FailedJsonResource::make($e->context()), 422);
         } elseif ($e instanceof FailedForceDeleteProfileException) {
             return response()->json(FailedJsonResource::make($e->context()), 422);
+        } elseif ($e instanceof UnknownApiKeyException) {
+            return response()->json(FailedJsonResource::make($e->context()), 422);
         }
         return parent::render($request, $e);
     }

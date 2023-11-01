@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Profile;
+namespace App\Http\Controllers\Api\Profile;
 
 use App\Exceptions\Profile\FailedForceDeleteProfileException;
 use App\Models\User;

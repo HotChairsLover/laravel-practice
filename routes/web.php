@@ -44,6 +44,7 @@ Route::group($profileGroupData, function () {
     Route::patch('update', 'ProfileController@update')->name('profile.update');
     Route::get('/', 'ProfileController@index')->name('profile.index');
     Route::delete('destroy', 'ProfileController@forcedDelete')->name('profile.forcedDelete');
+    Route::patch('edit', 'ProfileController@updateApiKey')->name('profile.updateApiKey');
 });
 
 $adminGroupData = [

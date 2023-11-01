@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Profile;
 
 use App\Http\Requests\ProfileRequest;
 use App\Repositories\AdvPostRepository;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends BaseController
@@ -63,6 +62,21 @@ class ProfileController extends BaseController
         if ($user) {
             return redirect()
                 ->route('profile.edit')
+                ->with(['success' => 'Успешно сохранено']);
+        } else {
+            return back()
+                ->withErrors(['msg' => 'Ошибка сохранения'])
+                ->withInput();
+        }
+    }
+
+    public function updateApiKey()
+    {
+        $user = Auth::user();
+        $user->api_key = \Str::random(100);
+        if ($user->save()) {
+            return redirect()
+                ->route('profile.index')
                 ->with(['success' => 'Успешно сохранено']);
         } else {
             return back()
