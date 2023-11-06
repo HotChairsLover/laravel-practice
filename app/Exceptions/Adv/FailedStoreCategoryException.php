@@ -7,7 +7,7 @@ class FailedStoreCategoryException extends BaseAdvException
     public function context(): array
     {
         $error = [
-            'msg' => "Ошибка сохранения категории",
+            'message' => "Ошибка сохранения категории",
         ];
         return $error;
     }

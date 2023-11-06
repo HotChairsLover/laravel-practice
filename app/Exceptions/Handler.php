@@ -40,6 +40,7 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $e)
     {
+
         if ($e instanceof FailedStorePostException) {
             return response()->json(FailedJsonResource::make($e->context()), 422);
         } elseif ($e instanceof FailedUpdatePostException) {

@@ -7,7 +7,7 @@ class UnknownPostException extends BaseAdvException
     public function context(): array
     {
         $error = [
-            'msg' => "Не найден пост"
+            'message' => "Не найдет пост",
         ];
         return $error;
     }

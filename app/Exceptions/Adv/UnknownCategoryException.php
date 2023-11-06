@@ -7,7 +7,7 @@ class UnknownCategoryException extends BaseAdvException
     public function context(): array
     {
         $error = [
-            'msg' => "Не найдена категория"
+            'message' => "Не найдена категория",
         ];
         return $error;
     }

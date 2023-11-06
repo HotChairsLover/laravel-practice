@@ -14,52 +14,59 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Auth::routes();
-Route::get('/', [App\Http\Controllers\Adv\PostController::class, 'index'])->name('home');
 
-$advGroupData = [
-    'namespace' => 'App\Http\Controllers\Adv',
-    'middleware' => ['auth'],
-];
-Route::group($advGroupData, function () {
-    Route::resource('posts', 'PostController')
-        ->names('adv.posts')
-        ->except(['index', 'show']);
-    Route::group(['excluded_middleware' => ['auth']], function () {
-        Route::get('posts', 'PostController@index')->name('adv.posts.index');
-        Route::get('posts/search/{category}', 'PostController@categorySearch')->name('adv.posts.categorySearch');
-        Route::get('posts/search/{search?}', 'PostController@textSearch')->name('adv.posts.textSearch');
-        Route::get('posts/{post}', 'PostController@show')->name('adv.posts.show');
-    });
-});
+//Route::get('/', [App\Http\Controllers\Adv\PostController::class, 'index'])->name('home');
 
-$profileGroupData = [
-    'namespace' => 'App\Http\Controllers\Profile',
-    'middleware' => ['auth'],
-    'prefix' => 'profile',
-];
-Route::group($profileGroupData, function () {
-    Route::get('posts', 'ProfileController@posts')->name('profile.posts');
-    Route::get('edit', 'ProfileController@edit')->name('profile.edit');
-    Route::patch('update', 'ProfileController@update')->name('profile.update');
-    Route::get('/', 'ProfileController@index')->name('profile.index');
-    Route::delete('destroy', 'ProfileController@forcedDelete')->name('profile.forcedDelete');
-    Route::patch('edit', 'ProfileController@updateApiKey')->name('profile.updateApiKey');
-});
+//$advGroupData = [
+//    'namespace' => 'App\Http\Controllers\Adv',
+//    'middleware' => ['auth'],
+//];
+//Route::group($advGroupData, function () {
+//    Route::resource('posts', 'PostController')
+//        ->names('adv.posts')
+//        ->except(['index', 'show']);
+//    Route::group(['excluded_middleware' => ['auth']], function () {
+//        Route::get('posts', 'PostController@index')->name('adv.posts.index');
+//        Route::get('posts/search/{category}', 'PostController@categorySearch')->name('adv.posts.categorySearch');
+//        Route::get('posts/search/{search?}', 'PostController@textSearch')->name('adv.posts.textSearch');
+//        Route::get('posts/{post}', 'PostController@show')->name('adv.posts.show');
+//    });
+//});
+//
+//$profileGroupData = [
+//    'namespace' => 'App\Http\Controllers\Profile',
+//    'middleware' => ['auth'],
+//    'prefix' => 'profile',
+//];
+//Route::group($profileGroupData, function () {
+//    Route::get('posts', 'ProfileController@posts')->name('profile.posts');
+//    Route::get('edit', 'ProfileController@edit')->name('profile.edit');
+//    Route::patch('update', 'ProfileController@update')->name('profile.update');
+//    Route::get('/', 'ProfileController@index')->name('profile.index');
+//    Route::delete('destroy', 'ProfileController@forcedDelete')->name('profile.forcedDelete');
+//    Route::patch('edit', 'ProfileController@updateApiKey')->name('profile.updateApiKey');
+//});
+//
+//$adminGroupData = [
+//    'namespace' => 'App\Http\Controllers\Adv\Admin',
+//    'prefix' => 'admin/adv',
+//    'middleware' => ['auth'],
+//];
+//Route::group($adminGroupData, function () {
+//    $methods = ['index', 'edit', 'update', 'create', 'store'];
+//    Route::resource('categories', 'CategoryController')
+//        ->only($methods)
+//        ->names('adv.admin.categories');
+//
+//    Route::resource('posts', 'PostController')
+//        ->except(['show'])
+//        ->names('adv.admin.posts');
+//});
+Route::get('{any}', function () {
+    return view('layouts.app');
+})->where('any', '.*');
 
-$adminGroupData = [
-    'namespace' => 'App\Http\Controllers\Adv\Admin',
-    'prefix' => 'admin/adv',
-    'middleware' => ['auth'],
-];
-Route::group($adminGroupData, function () {
-    $methods = ['index', 'edit', 'update', 'create', 'store'];
-    Route::resource('categories', 'CategoryController')
-        ->only($methods)
-        ->names('adv.admin.categories');
-
-    Route::resource('posts', 'PostController')
-        ->except(['show'])
-        ->names('adv.admin.posts');
-});
+//Route::view('/{any}', 'index')
+//    //->middleware('auth')
+//    ->where('any', '.*');
 

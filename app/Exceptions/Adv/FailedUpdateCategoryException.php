@@ -7,7 +7,7 @@ class FailedUpdateCategoryException extends BaseAdvException
     public function context(): array
     {
         $error = [
-            'msg' => "Ошибка обновления категории"
+            'message' => "Ошибка обноления категории",
         ];
         return $error;
     }

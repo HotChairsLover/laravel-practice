@@ -34,14 +34,14 @@ class ProfileController extends ApiBaseProfileController
      */
     public function index(Request $request)
     {
-        $user = $this->profileRepository->getByApiKey($request->header('apikey'));
+        $user = Auth::user();
 
         return SuccessJsonResource::make($user);
     }
 
     public function posts(Request $request)
     {
-        $user = $this->profileRepository->getByApiKey($request->header('apikey'));
+        $user = Auth::user();
         $paginator = $this->advPostRepository->getForProfileWithPaginate(20, $user->id);
 
         return SuccessJsonResource::make($paginator);

@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Api\Adv;
 
 use App\Http\Requests\Adv\PostCreateRequest;
 use App\Http\Requests\Adv\PostUpdateRequest;
+use App\Http\Resources\AdvPostShowJsonResource;
 use App\Http\Resources\SuccessJsonResource;
 use App\Models\AdvPost;
 use App\Repositories\AdvPostRepository;
 use App\Repositories\ProfileRepository;
+use Auth;
 use Illuminate\Http\Request;
 
 class PostController extends ApiAdvBaseController
@@ -60,7 +62,7 @@ class PostController extends ApiAdvBaseController
      */
     public function store(PostCreateRequest $request)
     {
-        $user = $this->profileRepository->getByApiKey($request->header('apikey'));
+        $user = Auth::user();
         $result = app(CreatePostAction::class)($request->input(), $user->id);
 
         return SuccessJsonResource::make($result);
@@ -73,7 +75,7 @@ class PostController extends ApiAdvBaseController
     {
         $item = $this->advPostRepository->getShow($id);
 
-        return SuccessJsonResource::make($item);
+        return AdvPostShowJsonResource::make($item);
     }
 
     /**
@@ -81,7 +83,7 @@ class PostController extends ApiAdvBaseController
      */
     public function update(PostUpdateRequest $request, string $id)
     {
-        $user = $this->profileRepository->getByApiKey($request->header('apikey'));
+        $user = Auth::user();
         $result = app(UpdatePostAction::class)($request->input(), $id, $this->advPostRepository, $user->id);
 
         return SuccessJsonResource::make($result);

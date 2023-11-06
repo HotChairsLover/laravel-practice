@@ -3,6 +3,7 @@
 namespace App\Http\Factories\Adv;
 
 use App\Exceptions\Adv\FailedUpdateCategoryException;
+use App\Exceptions\Adv\FailedUpdatePostException;
 use App\Models\AdvPost;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
@@ -22,7 +23,7 @@ class AdvPostFactory
 
     public static function update($post, $data, $userId)
     {
-        throw_if($post->user_id != $userId, FailedUpdateCategoryException::class);
+        throw_if($post->user_id != $userId, FailedUpdatePostException::class);
         $advPost = $post;
         $advPost->fill($data);
 
@@ -55,6 +56,6 @@ class AdvPostFactory
 
     private static function setUser(AdvPost $advPost, $userId)
     {
-        $advPost->user_id = auth()->id() ?? $userId ?? AdvPost::UNKNOWN_USER;
+        $advPost->user_id = auth()->id() ?? AdvPost::UNKNOWN_USER;
     }
 }
