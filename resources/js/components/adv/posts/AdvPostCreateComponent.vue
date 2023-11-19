@@ -29,21 +29,28 @@ export default {
             error: null
         }
     },
+    methods: {
+        onErrorUpdate(errors){
+            this.error = errors
+        }
+    }
 }
 </script>
 <template>
     <br>
-    <div class="alert alert-danger" role="alert" v-if="error !== null">
-        {{ error }}
-    </div>
-    <br>
     <div class="container">
+        <div class="justify-content-center">
+            <div class="alert alert-danger" role="alert" v-if="error !== null">
+                {{ error.errors }}
+            </div>
+        </div>
+        <br>
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <adv-post-create-main-col-component :post="post" :categories="categories"></adv-post-create-main-col-component>
             </div>
             <div class="col-md-3">
-                <adv-post-create-add-col-component :post="post" ></adv-post-create-add-col-component>
+                <adv-post-create-add-col-component :post="post" @updateParent = "onErrorUpdate"></adv-post-create-add-col-component>
             </div>
         </div>
     </div>

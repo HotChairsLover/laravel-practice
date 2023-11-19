@@ -1,12 +1,12 @@
-import { ref } from 'vue'
+import {ref} from 'vue'
 import axios from "axios";
-import { useRouter } from 'vue-router';
+import {useRouter} from 'vue-router';
 
 export default function usePosts() {
     const posts = ref([])
     const post = ref([])
-    const router = useRouter()
     const errors = ref('')
+    const router = useRouter()
 
     const getPosts = async (api_url) => {
         api_url = api_url || '/api/posts'
@@ -20,6 +20,7 @@ export default function usePosts() {
     }
 
     const getBySearch = async (search) => {
+        search = search || ''
         let response = await axios.get('api/posts/search?search=' + search)
         posts.value = response.data;
     }
@@ -41,20 +42,30 @@ export default function usePosts() {
         }
     }
 
-    const updatePost = async (id) => {
-        errors.value = ''
+    const updatePost = async (id, data) => {
         try {
-            await axios.put('/api/posts/' + id, post.value)
+            await axios.patch('/api/posts/' + id, data)
+                .then(response => {
+                    //router.push({name: 'adv.posts'})
+                    router.push('/')
+                })
+                .catch(response => {
+                    errors.value = response.response.data.message
+                })
+        } catch (e) {
+            return e
+        }
+    }
+
+    const destroyPost = async (id) => {
+        try {
+            await axios.delete('/api/posts/' + id)
             await router.push({name: 'posts.index'})
         } catch (e) {
             if (e.response.status === 422) {
                 errors.value = e.response.data.errors
             }
         }
-    }
-
-    const destroyPost = async (id) => {
-        await axios.delete('/api/posts/' + id)
     }
 
 

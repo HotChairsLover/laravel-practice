@@ -36,21 +36,28 @@ export default {
             error: null
         }
     },
+    methods: {
+        onErrorUpdate(errors){
+            this.error = errors
+        }
+    }
 }
 </script>
 <template>
     <br>
-    <div class="alert alert-danger" role="alert" v-if="error !== null">
-        {{ error }}
-    </div>
-    <br>
     <div class="container">
+        <div class="justify-content-center">
+            <div class="alert alert-danger" role="alert" v-if="error !== null">
+                {{ error.errors }}
+            </div>
+        </div>
+        <br>
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <adv-post-edit-main-col-component :post="post" :categories="categories"></adv-post-edit-main-col-component>
             </div>
             <div class="col-md-3">
-                <adv-post-edit-add-col-component :post="post" ></adv-post-edit-add-col-component>
+                <adv-post-edit-add-col-component :post="post" @updateParent = "onErrorUpdate"></adv-post-edit-add-col-component>
             </div>
         </div>
     </div>

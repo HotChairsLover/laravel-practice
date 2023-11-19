@@ -20,6 +20,12 @@ export default {
         ProfileIndexMainColComponent,
         ProfileIndexAddColComponent
     },
+    beforeRouteEnter(to, from, next) {
+        if (!window.Laravel.isLoggedin) {
+            return next('/');
+        }
+        next();
+    },
 
 }
 </script>

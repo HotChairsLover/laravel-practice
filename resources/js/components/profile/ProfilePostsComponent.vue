@@ -4,7 +4,16 @@ import {onMounted} from "vue"
 const { posts, getProfilePosts} = useProfile()
 onMounted(getProfilePosts)
 </script>
-
+<script>
+export default {
+    beforeRouteEnter(to, from, next) {
+        if (!window.Laravel.isLoggedin) {
+            return next('/');
+        }
+        next();
+    },
+}
+</script>
 <template>
     <div class="album py-5 bg-body-tertiary">
         <div class="container">

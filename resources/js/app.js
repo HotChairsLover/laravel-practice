@@ -6,8 +6,8 @@
 
 import './bootstrap';
 import { createApp } from 'vue'
-import router from "@/router/index.js"
-import App from "@/components/App.vue";
+import router from "./router/index.js"
+import App from "./components/App.vue";
 
 const app = createApp(App)
 app.config.globalProperties.$axios = axios;

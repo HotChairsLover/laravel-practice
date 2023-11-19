@@ -64,5 +64,8 @@
 import usePosts from "@/composables/adv/posts/posts.js"
 import {onMounted} from "vue"
 const { posts, getPosts, getByCategory, getBySearch } = usePosts()
-onMounted(getPosts)
+let queryString = window.location.search;
+let urlParams = new URLSearchParams(queryString);
+let param = urlParams.get('search');
+onMounted(() => getBySearch(param))
 </script>

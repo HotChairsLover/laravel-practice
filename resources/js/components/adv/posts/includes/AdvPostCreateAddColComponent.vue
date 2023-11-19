@@ -26,12 +26,17 @@ export default defineComponent({
                         if (response.status === 201) {
                             window.location.href = "/"
                         } else {
-                            this.error = response.data.message
+                            this.$emit('updateParent',
+                            {
+                                errors: response.data.message
+                            })
                         }
                     })
                     .catch(response => {
-                        console.log(response.response.data.message)
-                        this.error = response.response.data.message
+                        this.$emit('updateParent',
+                            {
+                                errors: response.response.data.message
+                            })
                     });
             })
         }

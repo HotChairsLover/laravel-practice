@@ -1,10 +1,10 @@
-<script setup>
-
-</script>
 <script>
 import {defineComponent} from "vue";
+import usePosts from "@/composables/adv/posts/posts.js"
 
+const {errors, destoyPost, updatePost} = usePosts()
 export default defineComponent({
+
     props: {
         post: {
             required: true
@@ -13,28 +13,15 @@ export default defineComponent({
     methods: {
         handleSubmit(e) {
             e.preventDefault()
-            axios.get('/sanctum/csrf-cookie').then(response => {
-                axios.patch('/api/posts/' + this.post.id, {
-                    title: this.post.title,
-                    description: this.post.description,
-                    price: this.post.price,
-                    is_published: this.post.is_published,
-                    category_id: this.post.category_id
+            updatePost(this.post.id, this.post)
+            this.$emit('updateParent',
+                {
+                    errors: errors
                 })
-                    .then(response => {
-                        console.log(response)
-                        if (response.status === 200) {
-                            window.location.href = "/"
-                        } else {
-                            this.error = response.data.message
-                        }
-                    })
-                    .catch(response => {
-                        console.log(response)
-                        console.log(response.response.data.message)
-                        this.error = response.response.data.message
-                    });
-            })
+        },
+        handleDelete(e) {
+            e.preventDefault()
+            destoyPost(this.post.id)
         }
     },
 })
@@ -82,6 +69,16 @@ export default defineComponent({
                         <label for="title">Удалено</label>
                         <input type="text" v-model="post.deleted_at" class="form-control" disabled>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <button type="submit" class="btn btn-primary" @click="handleDelete">Удалить</button>
                 </div>
             </div>
         </div>
