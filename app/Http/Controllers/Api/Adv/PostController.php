@@ -95,7 +95,6 @@ class PostController extends ApiAdvBaseController
     public function destroy(string $id)
     {
         $result = AdvPost::destroy($id);
-
-        return SuccessJsonResource::make($result);
+        return $result;
     }
 }

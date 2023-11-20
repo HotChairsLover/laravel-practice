@@ -2,7 +2,7 @@
 import {defineComponent} from "vue";
 import usePosts from "@/composables/adv/posts/posts.js"
 
-const {errors, destoyPost, updatePost} = usePosts()
+const {errors, destroyPost, updatePost} = usePosts()
 export default defineComponent({
 
     props: {
@@ -11,17 +11,27 @@ export default defineComponent({
         },
     },
     methods: {
-        handleSubmit(e) {
+        async handleSubmit(e) {
             e.preventDefault()
-            updatePost(this.post.id, this.post)
+            await updatePost(this.post.id, this.post)
+            if (errors.value === '') {
+                this.$router.push({name: 'adv.posts'})
+            }
             this.$emit('updateParent',
                 {
                     errors: errors
                 })
         },
-        handleDelete(e) {
+        async handleDelete(e) {
             e.preventDefault()
-            destoyPost(this.post.id)
+            await destroyPost(this.post.id)
+            if (errors.value === '') {
+                this.$router.push({name: 'adv.posts'})
+            }
+            this.$emit('updateParent',
+                {
+                    errors: errors
+                })
         }
     },
 })

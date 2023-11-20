@@ -3,7 +3,9 @@
 </script>
 <script>
 import {defineComponent} from "vue";
+import usePosts from "@/composables/adv/posts/posts.js"
 
+const {errors, storePost} = usePosts()
 export default defineComponent({
     props: {
         post: {
@@ -11,34 +13,23 @@ export default defineComponent({
         },
     },
     methods: {
-        handleSubmit(e) {
+        async handleSubmit(e) {
             e.preventDefault()
-            axios.get('/sanctum/csrf-cookie').then(response => {
-                axios.post('/api/posts/', {
-                    title: this.post.title,
-                    description: this.post.description,
-                    price: this.post.price,
-                    is_published: this.post.is_published,
-                    category_id: this.post.category_id
+            let post_data = {
+                title: this.post.title,
+                description: this.post.description,
+                price: this.post.price,
+                is_published: this.post.is_published,
+                category_id: this.post.category_id
+            }
+            await storePost(post_data)
+            if (errors.value === '') {
+                this.$router.push({name: 'adv.posts'})
+            }
+            this.$emit('updateParent',
+                {
+                    errors: errors
                 })
-                    .then(response => {
-                        console.log(response)
-                        if (response.status === 201) {
-                            window.location.href = "/"
-                        } else {
-                            this.$emit('updateParent',
-                            {
-                                errors: response.data.message
-                            })
-                        }
-                    })
-                    .catch(response => {
-                        this.$emit('updateParent',
-                            {
-                                errors: response.response.data.message
-                            })
-                    });
-            })
         }
     },
 })

@@ -34,11 +34,14 @@ export default function usePosts() {
         errors.value = ''
         try {
             await axios.post('/api/posts/', data)
-            await router.push({name: 'posts.index'})
+                .then(response => {
+                    errors.value = ''
+                })
+                .catch(response => {
+                    errors.value = response.response.data.message
+                })
         } catch (e) {
-            if (e.response.status === 422) {
-                errors.value = e.response.data.errors
-            }
+            return e
         }
     }
 
@@ -46,8 +49,7 @@ export default function usePosts() {
         try {
             await axios.patch('/api/posts/' + id, data)
                 .then(response => {
-                    //router.push({name: 'adv.posts'})
-                    router.push('/')
+                    errors.value = ''
                 })
                 .catch(response => {
                     errors.value = response.response.data.message
@@ -60,11 +62,14 @@ export default function usePosts() {
     const destroyPost = async (id) => {
         try {
             await axios.delete('/api/posts/' + id)
-            await router.push({name: 'posts.index'})
+                .then(response => {
+                    errors.value = ''
+                })
+                .catch(response => {
+                    errors.value = response.response.data.message
+                })
         } catch (e) {
-            if (e.response.status === 422) {
-                errors.value = e.response.data.errors
-            }
+            return e
         }
     }
 
