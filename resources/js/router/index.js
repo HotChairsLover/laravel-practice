@@ -8,6 +8,8 @@ import AdvPostsEditComponent from "@/components/adv/posts/AdvPostsEditComponent.
 import AdvPostCreateComponent from "@/components/adv/posts/AdvPostCreateComponent.vue";
 import ProfileIndexComponent from "@/components/profile/ProfileIndexComponent.vue";
 import ProfilePostsComponent from "@/components/profile/ProfilePostsComponent.vue";
+import AdminAdvPostsIndexComponent from "@/components/admin/adv/AdminAdvPostsIndexComponent.vue";
+import AdminAdvCategoriesIndexComponent from "@/components/admin/adv/AdminAdvCategoriesIndexComponent.vue";
 
 const routes = [
     {
@@ -58,6 +60,16 @@ const routes = [
         path: '/profile/posts',
         name: 'profile.posts',
         component: ProfilePostsComponent
+    },
+    {
+        path: '/admin/adv/posts',
+        name: 'admiv.adv.posts',
+        component: AdminAdvPostsIndexComponent
+    },
+    {
+        path: '/admin/adv/categories',
+        name: 'admiv.adv.categories',
+        component: AdminAdvCategoriesIndexComponent
     }
 ]
 

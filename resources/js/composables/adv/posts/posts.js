@@ -20,14 +20,21 @@ export default function usePosts() {
     }
 
     const getBySearch = async (search) => {
+        let origin = window.location.origin;
         search = search || ''
-        let response = await axios.get('api/posts/search?search=' + search)
+        let response = await axios.get(origin + '/api/posts/search?search=' + search)
         posts.value = response.data;
     }
 
     const getPost = async (id) => {
-        let response = await axios.get('/api/posts/' + id)
-        post.value = response.data.data;
+        try{
+            let response = await axios.get('/api/posts/' + id)
+            post.value = response.data.data;
+        }
+        catch (error){
+            throw 'Поста не существует'
+        }
+
     }
 
     const storePost = async (data) => {

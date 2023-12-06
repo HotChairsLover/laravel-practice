@@ -1,6 +1,7 @@
 <script setup>
 import usePosts from "@/composables/adv/posts/posts.js"
 import { onMounted } from "vue"
+import router from "@/router/index.js";
 const { post, getPost } = usePosts()
 const props = defineProps({
     id: {
@@ -8,19 +9,23 @@ const props = defineProps({
         type: String
     }
 })
-onMounted(() => getPost(props.id))
+onMounted(async () => {
+    try {
+        await getPost(props.id)
+    }
+    catch (error){
+        router.push({path: '/'})
+    }
+})
 </script>
 <script>
-import {defineComponent} from "vue";
 import advPostShowMainColComponent from "@/components/adv/posts/includes/AdvPostShowMainColComponent.vue";
 import advPostShowAddColComponent from "@/components/adv/posts/includes/AdvPostShowAddColComponent.vue";
-
 export default {
     components: {
         advPostShowMainColComponent,
         advPostShowAddColComponent
     },
-
 }
 </script>
 <template>
@@ -28,7 +33,7 @@ export default {
     <br>
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-8" @click="console.log(props)">
                 <adv-post-show-main-col-component :post="post"></adv-post-show-main-col-component>
             </div>
             <div class="col-md-3">
