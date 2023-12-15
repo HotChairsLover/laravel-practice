@@ -5,13 +5,13 @@ const { profile, getProfile } = useProfile()
 onMounted(() => getProfile())
 </script>
 <script>
-import ProfileIndexMainColComponent from "@/components/profile/includes/ProfileIndexMainColComponent.vue";
-import ProfileIndexAddColComponent from "@/components/profile/includes/ProfileIndexAddColComponent.vue";
+import ProfileEditMainColComponent from "@/components/profile/includes/ProfileEditMainColComponent.vue";
+import ProfileEditAddColComponent from "@/components/profile/includes/ProfileEditAddColComponent.vue";
 
 export default {
     components: {
-        ProfileIndexMainColComponent,
-        ProfileIndexAddColComponent
+        ProfileEditMainColComponent,
+        ProfileEditAddColComponent
     },
     beforeRouteEnter(to, from, next) {
         if (!window.Laravel.isLoggedin) {
@@ -29,10 +29,10 @@ export default {
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <profile-index-main-col-component :user = profile></profile-index-main-col-component>
+                <profile-edit-main-col-component :user = profile></profile-edit-main-col-component>
             </div>
             <div class="col-md-3">
-                <profile-index-add-col-component :user = profile></profile-index-add-col-component>
+                <profile-edit-add-col-component :user = profile></profile-edit-add-col-component>
             </div>
         </div>
     </div>

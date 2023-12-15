@@ -33,7 +33,7 @@ export default {
     <br>
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8" @click="console.log(props)">
+            <div class="col-md-8">
                 <adv-post-show-main-col-component :post="post"></adv-post-show-main-col-component>
             </div>
             <div class="col-md-3">

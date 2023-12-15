@@ -10,6 +10,7 @@ import ProfileIndexComponent from "@/components/profile/ProfileIndexComponent.vu
 import ProfilePostsComponent from "@/components/profile/ProfilePostsComponent.vue";
 import AdminAdvPostsIndexComponent from "@/components/admin/adv/AdminAdvPostsIndexComponent.vue";
 import AdminAdvCategoriesIndexComponent from "@/components/admin/adv/AdminAdvCategoriesIndexComponent.vue";
+import ProfileEditComponent from "@/components/profile/ProfileEditComponent.vue";
 
 const routes = [
     {
@@ -60,6 +61,11 @@ const routes = [
         path: '/profile/posts',
         name: 'profile.posts',
         component: ProfilePostsComponent
+    },
+    {
+        path: '/profile/edit',
+        name: 'profile.edit',
+        component: ProfileEditComponent
     },
     {
         path: '/admin/adv/posts',

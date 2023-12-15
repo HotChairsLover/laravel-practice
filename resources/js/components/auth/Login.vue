@@ -20,7 +20,6 @@ export default {
                         password: this.password
                     })
                         .then(response => {
-                            console.log(response)
                             if (response.status === 204) {
                                 this.$router.go('/')
                             } else {

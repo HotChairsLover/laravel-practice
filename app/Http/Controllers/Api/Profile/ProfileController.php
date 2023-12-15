@@ -52,10 +52,10 @@ class ProfileController extends ApiBaseProfileController
      */
     public function update(ProfileRequest $request)
     {
-        $apiUser = $this->profileRepository->getByApiKey($request->header('apikey'));
-        $user = app(UpdateProfileAction::class)($request->input(), $apiUser);
+        $user = Auth::user();
+        $updated_user = app(UpdateProfileAction::class)($request->input(), $user);
 
-        return SuccessJsonResource::make($user);
+        return SuccessJsonResource::make($updated_user);
     }
 
     /**

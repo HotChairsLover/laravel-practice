@@ -17,7 +17,9 @@ export default defineComponent({
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <button type="submit" class="btn btn-primary"><a class="link-light" href="profile.edit">Редактировать</a></button>
+                    <button type="submit" class="btn btn-primary">
+                        <router-link class="link-light" :to="{name: 'profile.edit'}">Редактировать</router-link>
+                    </button>
                 </div>
             </div>
         </div>
