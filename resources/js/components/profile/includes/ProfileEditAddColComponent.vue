@@ -3,13 +3,28 @@
 </script>
 <script>
 import {defineComponent} from "vue";
+import useProfile from "@/composables/profile/profile.js";
 
+const {errors, updateProfile} = useProfile()
 export default defineComponent({
     props: {
         user: {
             required: true
         }
-    }
+    },
+    methods: {
+        async handleSubmit(e) {
+            e.preventDefault()
+            await updateProfile(this.user)
+            if (errors.value === '') {
+                this.$router.push({name: 'profile.index'})
+            }
+            this.$emit('updateParent',
+                {
+                    errors: errors
+                })
+        },
+    },
 })
 </script>
 <template>
@@ -17,7 +32,7 @@ export default defineComponent({
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                    <button type="submit" class="btn btn-primary" @click="handleSubmit">Сохранить</button>
                 </div>
             </div>
         </div>

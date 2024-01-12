@@ -19,11 +19,13 @@ export default defineComponent({
                 <div class="card-body">
                     <div class="form-group">
                         <label for="name">Имя</label>
-                        <p class="form-control m-0">{{user.name}}</p>
+                        <input name="name" id="name" type="text" class="form-control" minlength="2"
+                               v-model="user.name" required>
                     </div>
                     <div class="form-group">
                         <label for="email">Почта</label>
-                        <p class="form-control m-0">{{user.email}}</p>
+                        <input name="email" id="email" type="text" class="form-control"
+                               v-model="user.email" required>
                     </div>
                 </div>
             </div>

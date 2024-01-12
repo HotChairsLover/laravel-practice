@@ -19,20 +19,35 @@ export default {
         }
         next();
     },
+    data() {
+        return {
+            error: null
+        }
+    },
+    methods: {
+        onErrorUpdate(errors){
+            this.error = errors
+        }
+    }
 
 }
 </script>
 
 <template>
     <br>
-    <br>
     <div class="container">
+        <div class="justify-content-center">
+            <div class="alert alert-danger" role="alert" v-if="error !== null">
+                {{ error.errors }}
+            </div>
+        </div>
+        <br>
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <profile-edit-main-col-component :user = profile></profile-edit-main-col-component>
+                <profile-edit-main-col-component :user = "profile"></profile-edit-main-col-component>
             </div>
             <div class="col-md-3">
-                <profile-edit-add-col-component :user = profile></profile-edit-add-col-component>
+                <profile-edit-add-col-component :user = "profile" @updateParent = "onErrorUpdate"></profile-edit-add-col-component>
             </div>
         </div>
     </div>

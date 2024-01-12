@@ -9,7 +9,15 @@ class UpdateProfileAction
 {
     public function __invoke(array $payload, User $user): User
     {
-        throw_if(!$user->update($payload), FailedUpdateProfileException::class);
+        $user->fill($payload);
+        if ($user->isDirty('email')) {
+            $validator = validator($payload, ['email' => 'unique:users']);
+            $validator->validate();
+            throw_if(!$user->save(), FailedUpdateProfileException::class);
+        } else {
+            throw_if(!$user->save(), FailedUpdateProfileException::class);
+        }
+
 
         return $user;
     }

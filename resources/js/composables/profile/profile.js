@@ -20,12 +20,27 @@ export default function useProfile() {
 
     }
 
+    const updateProfile = async (data) => {
+        try {
+            await axios.patch('/api/profile/', data)
+                .then(response => {
+                    errors.value = ''
+                })
+                .catch(response => {
+                    errors.value = response.response.data.message
+                })
+        } catch (e) {
+            return e
+        }
+    }
+
 
     return {
         profile: profile,
         posts: posts,
         errors,
         getProfile: getProfile,
-        getProfilePosts: getProfilePosts
+        getProfilePosts: getProfilePosts,
+        updateProfile: updateProfile
     }
 }
