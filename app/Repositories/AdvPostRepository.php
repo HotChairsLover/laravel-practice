@@ -14,6 +14,7 @@ class AdvPostRepository extends CoreRepository
         'published_at',
         'price',
         'category_id',
+        'image',
     ];
 
     public function getBySearchForIndexWithPaginate($perPage, $search)
@@ -87,6 +88,7 @@ class AdvPostRepository extends CoreRepository
             'updated_at',
             'created_at',
             'deleted_at',
+            'image',
         ];
 
         $result = $this->startConditions()

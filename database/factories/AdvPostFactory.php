@@ -30,6 +30,7 @@ class AdvPostFactory extends Factory
             'slug' => Str::slug($title),
             'price' => rand(100, 999999999),
             'description' => $txt,
+            'image' => 'https://m.media-amazon.com/images/I/41WpqIvJWRL._AC_UY436_QL65_.jpg',
             'is_published' => $isPublished,
             'published_at' => $isPublished ? fake()->dateTimeBetween('-2 months', '-1 days') : null,
             'created_at' => $created_at,

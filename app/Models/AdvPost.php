@@ -20,6 +20,7 @@ class AdvPost extends Model
             'description',
             'is_published',
             'published_at',
+            'image'
         ];
 
     public function category()

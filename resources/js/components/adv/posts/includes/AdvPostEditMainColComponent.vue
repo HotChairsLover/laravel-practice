@@ -13,6 +13,11 @@ defineComponent({
         categories: {
             required: true
         }
+    },
+    methods: {
+        changeImage(e){
+            this.post.image = e.target.files[0];
+        }
     }
 })
 
@@ -61,6 +66,15 @@ defineComponent({
                                id="price"
                                class="form-control"
                                v-model="post.price">
+                    </div>
+                    <div class="form-group">
+                        <label for="image">Фото</label>
+                        <input name="image"
+                               id="image"
+                               class="form-control"
+                               type="file"
+                               accept="image/png,jpeg,jpg"
+                               v-on:change="changeImage">
                     </div>
                     <div class="form-check">
                         <input name="is_published"

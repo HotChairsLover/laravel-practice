@@ -24,6 +24,8 @@ return new class extends Migration
 
             $table->text('description');
 
+            $table->string('image');
+
             $table->boolean('is_published')->default(false);
             $table->timestamp('published_at')->nullable();
 

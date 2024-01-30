@@ -15,12 +15,19 @@ export default defineComponent({
     methods: {
         async handleSubmit(e) {
             e.preventDefault()
+            if(this.post.is_published === true){
+                this.post.is_published = 1
+            }
+            else if(this.post.is_published === false){
+                this.post.is_published = 0
+            }
             let post_data = {
                 title: this.post.title,
                 description: this.post.description,
                 price: this.post.price,
                 is_published: this.post.is_published,
-                category_id: this.post.category_id
+                category_id: this.post.category_id,
+                image: this.post.image,
             }
             await storePost(post_data)
             if (errors.value === '') {

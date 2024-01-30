@@ -63,7 +63,10 @@ class PostController extends ApiAdvBaseController
     public function store(PostCreateRequest $request)
     {
         $user = Auth::user();
-        $result = app(CreatePostAction::class)($request->input(), $user->id);
+        $image = $request->file('image')->store('image', 'public');
+        $payload = $request->input();
+        $payload['image'] = '/storage/'.$image;
+        $result = app(CreatePostAction::class)($payload, $user->id);
 
         return SuccessJsonResource::make($result);
     }
@@ -84,7 +87,15 @@ class PostController extends ApiAdvBaseController
     public function update(PostUpdateRequest $request, string $id)
     {
         $user = Auth::user();
-        $result = app(UpdatePostAction::class)($request->input(), $id, $this->advPostRepository, $user->id);
+        $image = $request->file('image');
+        if ($image) {
+            $image = $image->store('image', 'public');
+            $payload = $request->input();
+            $payload['image'] = '/storage/'.$image;
+            $result = app(UpdatePostAction::class)($payload, $id, $this->advPostRepository, $user->id);
+        } else {
+            $result = app(UpdatePostAction::class)($request->input(), $id, $this->advPostRepository, $user->id);
+        }
 
         return SuccessJsonResource::make($result);
     }

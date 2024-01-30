@@ -18,6 +18,7 @@ class PostCreateRequest extends AdvBaseRequest
             'price' => 'required|integer|max:999999999',
             'description' => 'required|string|min:5|max:10000',
             'category_id' => 'required|integer|exists:adv_categories,id',
+            'image' => 'required|mimes:jpg,png,jpeg|max:2048',
         ];
     }
 

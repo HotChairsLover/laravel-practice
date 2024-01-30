@@ -13,7 +13,28 @@ export default defineComponent({
     methods: {
         async handleSubmit(e) {
             e.preventDefault()
-            await updatePost(this.post.id, this.post)
+            if(this.post.is_published === true){
+                this.post.is_published = 1
+            }
+            else if(this.post.is_published === false){
+                this.post.is_published = 0
+            }
+           /* let form_data = new FormData();
+            form_data.append('title', this.post.title);
+            form_data.append('image', this.post.image);
+            form_data.append('description', this.post.description);
+            form_data.append('price', this.post.price);
+            form_data.append('is_published', this.post.is_published);
+            form_data.append('category_id', this.post.category_id);*/
+            let post_data = {
+                title: this.post.title,
+                description: this.post.description,
+                price: this.post.price,
+                is_published: this.post.is_published,
+                category_id: this.post.category_id,
+                image: this.post.image,
+            }
+            await updatePost(this.post.id, post_data)
             if (errors.value === '') {
                 this.$router.push({name: 'adv.posts'})
             }

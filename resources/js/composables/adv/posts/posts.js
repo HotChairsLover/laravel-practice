@@ -27,20 +27,24 @@ export default function usePosts() {
     }
 
     const getPost = async (id) => {
-        try{
+        try {
             let response = await axios.get('/api/posts/' + id)
             post.value = response.data.data;
-        }
-        catch (error){
+        } catch (error) {
             throw 'Поста не существует'
         }
 
     }
 
     const storePost = async (data) => {
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        }
         errors.value = ''
         try {
-            await axios.post('/api/posts/', data)
+            await axios.post('/api/posts/', data, config)
                 .then(response => {
                     errors.value = ''
                 })
@@ -53,12 +57,20 @@ export default function usePosts() {
     }
 
     const updatePost = async (id, data) => {
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        }
         try {
-            await axios.patch('/api/posts/' + id, data)
+            data['_method'] = 'PATCH';
+            await axios.post('/api/posts/' + id, data, config)
                 .then(response => {
                     errors.value = ''
+                    console.log(response)
                 })
                 .catch(response => {
+                    console.log(response)
                     errors.value = response.response.data.message
                 })
         } catch (e) {
