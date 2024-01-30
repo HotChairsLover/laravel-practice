@@ -55,6 +55,12 @@ export default {
                     <li class="nav-item" v-if="isLoggedIn">
                         <router-link :to="{name: 'adv.posts.create'}" class="nav-link">Create advertisement</router-link>
                     </li>
+                    <li class="nav-item" v-if="isLoggedIn && user.admin">
+                        <router-link :to="{name: 'admin.adv.posts'}" class="nav-link">Admin posts</router-link>
+                    </li>
+                    <li class="nav-item" v-if="isLoggedIn && user.admin">
+                        <router-link :to="{name: 'admin.adv.categories'}" class="nav-link">Admin categories</router-link>
+                    </li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->

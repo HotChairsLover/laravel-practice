@@ -11,9 +11,10 @@
                                     <th>#</th>
                                     <th>Категория</th>
                                     <th>Родитель</th>
+                                    <th></th>
                                 </tr>
                                 </thead>
-                                <tbody v-for="category in categories.data">
+                                <tbody v-for="category in categories">
                                     <tr>
                                         <td>{{category.id}}</td>
                                         <td>
@@ -24,6 +25,7 @@
                                                 {{category.parent_category.title}}
                                             </template>
                                         </td>
+                                        <td><button type="submit" class="btn btn-primary" @click="handleDelete(category.id)">Удалить</button></td>
                                     </tr>
                                 </tbody>
                                 <tfoot></tfoot>
@@ -66,4 +68,18 @@ import useCategories from "@/composables/adv/posts/categories.js"
 import {onMounted} from "vue"
 const { categories, getCategories } = useCategories()
 onMounted(() => getCategories())
+</script>
+<script>
+import {defineComponent} from "vue";
+import useCategories from "@/composables/adv/posts/categories.js";
+
+const {errors, destroyCategory, } = useCategories()
+export default defineComponent({
+
+    methods: {
+        async handleDelete(id) {
+            await destroyCategory(id)
+        }
+    },
+})
 </script>

@@ -40,7 +40,7 @@ Route::group($apiAdvGroupData, function () {
 Route::group($apiAdvGroupData, function () {
     Route::apiResource('categories', 'CategoryController')
         ->names('api.adv.categories')
-        ->except(['show', 'destroy']);
+        ->except(['show']);
 });
 
 $apiProfileGroupData = [

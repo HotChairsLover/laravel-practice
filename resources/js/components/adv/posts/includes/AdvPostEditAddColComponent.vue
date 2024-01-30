@@ -34,6 +34,9 @@ export default defineComponent({
                 category_id: this.post.category_id,
                 image: this.post.image,
             }
+            if(typeof(post_data['image']) === 'string'){
+                delete post_data['image'];
+            }
             await updatePost(this.post.id, post_data)
             if (errors.value === '') {
                 this.$router.push({name: 'adv.posts'})

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Adv;
 use App\Http\Requests\Adv\CategoryCreateRequest;
 use App\Http\Requests\Adv\CategoryUpdateRequest;
 use App\Http\Resources\SuccessJsonResource;
+use App\Models\AdvCategory;
 use App\Repositories\AdvCategoryRepository;
 
 class CategoryController extends ApiAdvBaseController
@@ -46,5 +47,15 @@ class CategoryController extends ApiAdvBaseController
     {
         $result = app(UpdateCategoryAction::class)($request->input(), $id, $this->advCategoryRepository);
         return SuccessJsonResource::make($result);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+
+        $result = AdvCategory::find($id)->forceDelete();
+        return $result;
     }
 }

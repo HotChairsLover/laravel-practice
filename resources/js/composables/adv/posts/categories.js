@@ -14,10 +14,25 @@ export default function useCategories() {
         categories.value = response.data.data;
     }
 
+    const destroyCategory = async (id) => {
+        try {
+            await axios.delete('/api/categories/' + id)
+                .then(response => {
+                    errors.value = ''
+                })
+                .catch(response => {
+                    errors.value = response.response.data.message
+                })
+        } catch (e) {
+            return e
+        }
+    }
+
 
     return {
         categories: categories,
         errors,
+        destroyCategory: destroyCategory,
         getCategories: getCategories,
     }
 }

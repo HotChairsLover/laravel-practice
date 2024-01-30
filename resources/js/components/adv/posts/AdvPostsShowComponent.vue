@@ -2,7 +2,7 @@
 import usePosts from "@/composables/adv/posts/posts.js"
 import { onMounted } from "vue"
 import router from "@/router/index.js";
-const { post, getPost } = usePosts()
+const { post, getShow } = usePosts()
 const props = defineProps({
     id: {
         required: true,
@@ -11,7 +11,7 @@ const props = defineProps({
 })
 onMounted(async () => {
     try {
-        await getPost(props.id)
+        await getShow(props.id)
     }
     catch (error){
         router.push({path: '/'})

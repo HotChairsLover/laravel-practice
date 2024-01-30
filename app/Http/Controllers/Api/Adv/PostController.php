@@ -92,9 +92,9 @@ class PostController extends ApiAdvBaseController
             $image = $image->store('image', 'public');
             $payload = $request->input();
             $payload['image'] = '/storage/'.$image;
-            $result = app(UpdatePostAction::class)($payload, $id, $this->advPostRepository, $user->id);
+            $result = app(UpdatePostAction::class)($payload, $id, $this->advPostRepository, $user);
         } else {
-            $result = app(UpdatePostAction::class)($request->input(), $id, $this->advPostRepository, $user->id);
+            $result = app(UpdatePostAction::class)($request->input(), $id, $this->advPostRepository, $user);
         }
 
         return SuccessJsonResource::make($result);

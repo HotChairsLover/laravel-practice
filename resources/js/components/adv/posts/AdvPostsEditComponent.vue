@@ -1,9 +1,9 @@
 <script setup>
 import usePosts from "@/composables/adv/posts/posts.js"
 import useCategories from "@/composables/adv/posts/categories.js";
-import {onMounted, onUnmounted} from "vue"
+import {onBeforeMount} from "vue"
 
-const {post, getPost} = usePosts()
+const {post, getPost, router} = usePosts()
 const {categories, getCategories} = useCategories()
 const props = defineProps({
     id: {
@@ -11,10 +11,24 @@ const props = defineProps({
         type: String
     }
 })
-onMounted(() => {
-    getPost(props.id)
-    getCategories()
+
+async function job() {
+    await getPost(props.id, window.Laravel.user)
+    await getCategories()
+    let author_id = await post._value.user_id;
+    let user_id = window.Laravel.user.id;
+    return author_id === user_id;
+
+}
+
+onBeforeMount(async () => {
+    if (!await job()) {
+        if(!window.Laravel.user.admin){
+            router.push({name: 'adv.posts'})
+        }
+    }
 })
+
 </script>
 <script>
 import advPostEditAddColComponent from "@/components/adv/posts/includes/AdvPostEditAddColComponent.vue";
@@ -37,10 +51,10 @@ export default {
         }
     },
     methods: {
-        onErrorUpdate(errors){
+        onErrorUpdate(errors) {
             this.error = errors
         }
-    }
+    },
 }
 </script>
 <template>
@@ -54,10 +68,12 @@ export default {
         <br>
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <adv-post-edit-main-col-component :post="post" :categories="categories"></adv-post-edit-main-col-component>
+                <adv-post-edit-main-col-component :post="post"
+                                                  :categories="categories"></adv-post-edit-main-col-component>
             </div>
             <div class="col-md-3">
-                <adv-post-edit-add-col-component :post="post" @updateParent = "onErrorUpdate"></adv-post-edit-add-col-component>
+                <adv-post-edit-add-col-component :post="post"
+                                                 @updateParent="onErrorUpdate"></adv-post-edit-add-col-component>
             </div>
         </div>
     </div>

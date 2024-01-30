@@ -69,12 +69,12 @@ const routes = [
     },
     {
         path: '/admin/adv/posts',
-        name: 'admiv.adv.posts',
+        name: 'admin.adv.posts',
         component: AdminAdvPostsIndexComponent
     },
     {
         path: '/admin/adv/categories',
-        name: 'admiv.adv.categories',
+        name: 'admin.adv.categories',
         component: AdminAdvCategoriesIndexComponent
     }
 ]

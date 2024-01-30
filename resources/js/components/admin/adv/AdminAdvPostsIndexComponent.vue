@@ -9,7 +9,6 @@
                                 <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Автор</th>
                                     <th>Категория</th>
                                     <th>Заголовок</th>
                                     <th>Дата публикации</th>
@@ -18,7 +17,6 @@
                                 <tbody v-for="post in posts.data">
                                     <tr>
                                         <td>{{post.id}}</td>
-                                        <td>{{post.user_name}}</td>
                                         <td>{{post.category.title}}</td>
                                         <td>
                                             <router-link :to="{name: 'adv.posts.edit', params: {id: post.id} }">{{post.title}}</router-link>

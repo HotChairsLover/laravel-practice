@@ -26,7 +26,24 @@ export default function usePosts() {
         posts.value = response.data;
     }
 
-    const getPost = async (id) => {
+    const getPost = async (id, user) => {
+        try {
+            let response = await axios.get('/api/posts/' + id)
+            if(response.data.data.user_id === user.id)
+            {
+                post.value = response.data.data;
+            }
+            else if(user.admin)
+            {
+                post.value = response.data.data;
+            }
+        } catch (error) {
+            throw 'Поста не существует'
+        }
+
+    }
+
+    const getShow = async (id) => {
         try {
             let response = await axios.get('/api/posts/' + id)
             post.value = response.data.data;
@@ -64,6 +81,7 @@ export default function usePosts() {
         }
         try {
             data['_method'] = 'PATCH';
+            console.log(data);
             await axios.post('/api/posts/' + id, data, config)
                 .then(response => {
                     errors.value = ''
@@ -97,6 +115,8 @@ export default function usePosts() {
         posts: posts,
         post: post,
         errors,
+        router: router,
+        getShow: getShow,
         getPosts: getPosts,
         getByCategory: getByCategory,
         getBySearch: getBySearch,
