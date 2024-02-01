@@ -71,7 +71,7 @@ export default {
                                 <label for="email" class="col-sm-4 col-form-label text-md-right">E-Mail Address</label>
                                 <div class="col-md-6">
                                     <input id="email" type="email" class="form-control" v-model="email" required
-                                           autofocus autocomplete="off">
+                                           autocomplete="off">
                                 </div>
                             </div>
                             <br>
