@@ -18,7 +18,7 @@
                                     <tr>
                                         <td>{{category.id}}</td>
                                         <td>
-                                            <router-link :to="{name: 'adv.posts.edit', params: {id: category.id} }">{{category.title}}</router-link>
+                                            {{category.title}}
                                         </td>
                                         <td>
                                             <template v-if="category.parent_category">
