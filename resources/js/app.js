@@ -6,13 +6,20 @@
 
 import './bootstrap';
 import { createApp } from 'vue'
-import router from "./router/index.js"
+import { createMetaManager } from 'vue-meta'
+import router from "./router/index.js";
 import App from "./components/App.vue";
+
+
 
 const app = createApp(App)
 app.config.globalProperties.$axios = axios;
+
 app.use(router)
+app.use(createMetaManager())
 app.mount('#app')
+
+
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
  * registering components with the application instance so they are ready

@@ -1,6 +1,8 @@
 <script setup>
 import useProfile from "@/composables/profile/profile.js";
 import { onMounted } from "vue"
+import { useMeta } from 'vue-meta'
+useMeta({title: 'Редактирование профиля', description: 'Страница редактирования профиля на сайте объявлений'})
 const { profile, getProfile } = useProfile()
 onMounted(() => getProfile())
 </script>

@@ -2,7 +2,8 @@
 import useCategories from "@/composables/adv/posts/categories.js";
 import usePosts from "@/composables/adv/posts/posts.js";
 import {onMounted} from "vue"
-
+import { useMeta } from 'vue-meta'
+useMeta({title: 'Создать объявление', description: 'Страница создания объявления'})
 const {categories, getCategories} = useCategories()
 const {post, getPost} = usePosts()
 onMounted(() => {

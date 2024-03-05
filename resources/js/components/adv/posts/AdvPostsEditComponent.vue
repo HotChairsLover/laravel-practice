@@ -2,7 +2,8 @@
 import usePosts from "@/composables/adv/posts/posts.js"
 import useCategories from "@/composables/adv/posts/categories.js";
 import {onBeforeMount} from "vue"
-
+import { useMeta } from 'vue-meta'
+useMeta({title: 'Редактирование объявления', description: 'Страница редактирования объявления'})
 const {post, getPost, router} = usePosts()
 const {categories, getCategories} = useCategories()
 const props = defineProps({

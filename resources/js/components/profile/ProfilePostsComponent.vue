@@ -1,6 +1,8 @@
 <script setup>
 import useProfile from "@/composables/profile/profile.js";
 import {onMounted} from "vue"
+import { useMeta } from 'vue-meta'
+useMeta({title: 'Созданные объявлений', description: 'Страница просмотра созданных объявлений на сайте'})
 const { posts, getProfilePosts} = useProfile()
 onMounted(getProfilePosts)
 </script>

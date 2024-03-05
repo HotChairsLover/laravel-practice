@@ -2,6 +2,7 @@
 
 </script>
 <script>
+import { useMeta } from 'vue-meta'
 export default {
     name: "App",
     data() {
@@ -34,9 +35,19 @@ export default {
             })
         }
     },
+    setup () {
+        useMeta({
+            title: '',
+            htmlAttrs: { lang: 'en', amp: true }
+        })
+    }
+
 }
 </script>
 <template>
+    <metainfo>
+        <template v-slot:title="{ content }">{{ content ? `${content} | Advertisements` : `Advertisements` }}</template>
+    </metainfo>
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
         <div class="container">
             <a class="navbar-brand" href="/">

@@ -1,4 +1,6 @@
 <template>
+    <meta name="title" content="gagaagsgas">
+    <meta name="description" content="fafafafaf">
     <div class="album py-5 bg-body-tertiary">
         <div class="container">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
@@ -58,9 +60,13 @@
 <script setup>
 import usePosts from "@/composables/adv/posts/posts.js"
 import {onMounted} from "vue"
+import { useMeta } from 'vue-meta'
+useMeta({title: 'Объявления', description: 'Главная страница сайта объявлений, содержит множество объявлений'})
 const { posts, getPosts, getByCategory, getBySearch } = usePosts()
 let queryString = window.location.search;
 let urlParams = new URLSearchParams(queryString);
 let param = urlParams.get('search');
 onMounted(() => getBySearch(param))
 </script>
+
+

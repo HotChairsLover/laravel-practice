@@ -2,6 +2,8 @@
 import usePosts from "@/composables/adv/posts/posts.js"
 import { onMounted } from "vue"
 import router from "@/router/index.js";
+import { useMeta } from 'vue-meta'
+useMeta({title: 'Объявление', description: 'Страница просмотра единичного объявления'})
 const { post, getShow } = usePosts()
 const props = defineProps({
     id: {

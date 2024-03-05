@@ -1,5 +1,6 @@
 <script setup>
-
+import { useMeta } from 'vue-meta'
+useMeta({title: 'Регистрация', description: 'Страница регистрации на сайте объявлений'})
 </script>
 <script>
 export default {
